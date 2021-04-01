@@ -1,0 +1,25 @@
+-- *은 모든 열이라는 의미로 사용 
+SELECT * -- 줄 끝까지 주석으로 처리됩니다.
+FROM employees; -- 명령어는 대문자로, 나머지는 소문자를 사용하는 것이 좋다(가독성, 필수는 아님)
+
+SELECT employee_id, first_name, last_name -- 출력하려는 열
+FROM employees; -- 참조하는 테이블 
+
+-- 원하는 열들의 이름만 선택해서 
+-- employee_id를 기준으로 내림차순 정렬 후 결과보기 
+SELECT employee_id, first_name, last_name -- 출력하려는 열
+FROM employees -- 참조하는 테이블 
+ORDER BY employee_id DESC, first_name ASC; -- DESC 내림차순
+
+-- 특정 열만 출력
+SELECT job_id
+FROM employees; 
+
+-- 특정 열, 고유한 값만 추출하여 출력
+SELECT DISTINCT job_id
+FROM employees; 
+
+-- 별명 사용 (AS)
+SELECT employee_id AS 사원번호, first_name AS 이름, last_name AS 성 
+FROM employees; 
+
