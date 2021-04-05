@@ -1,11 +1,17 @@
+실행파일 경로는 C:/sqldeveloper/sqldeveloper.exe
+접속 비밀번호: 1234 
+코드 실행 단축키: ctrl + enter 
+
+--는 줄 끝까지 주석으로 처리됩니다.
 -- *은 모든 열이라는 의미로 사용 
-SELECT * -- 줄 끝까지 주석으로 처리됩니다.
-FROM employees; -- 명령어는 대문자로, 나머지는 소문자를 사용하는 것이 좋다(가독성, 필수는 아님)
+SELECT * 
+FROM employees; 
+-- 명령어는 대문자로, 나머지는 소문자를 사용하는 것이 좋다(가독성, 필수는 아님)
 
 SELECT employee_id, first_name, last_name -- 출력하려는 열
 FROM employees; -- 참조하는 테이블 
 
--- 원하는 열들의 이름만 선택해서 
+-- 원하는 열들의 이름만 선택해서 (select 뒤의 열들만 조회)
 -- employee_id를 기준으로 내림차순 정렬 후 결과보기 
 SELECT employee_id, first_name, last_name -- 출력하려는 열
 FROM employees -- 참조하는 테이블 
@@ -15,11 +21,52 @@ ORDER BY employee_id DESC, first_name ASC; -- DESC 내림차순
 SELECT job_id
 FROM employees; 
 
--- 특정 열, 고유한 값만 추출하여 출력
+-- 특정 열, 고유한 값(중복 제거)만 추출하여 출력 (DISTINCT)
 SELECT DISTINCT job_id
 FROM employees; 
 
 -- 별명 사용 (AS)
+-- AS를 사용하여 열이름을 변경하여 출력한다. 
+-- 실제 이름이 변하는 건 아니다.
 SELECT employee_id AS 사원번호, first_name AS 이름, last_name AS 성 
 FROM employees; 
+
+-- 두 개 열을 붙여서 하나의 데이터 값으로 나타내기 (|| 활용)
+SELECT employee_id, first_name || last_name
+FROM employees;
+
+-- 두 개 열을 붙여서 하나의 데이터 값으로 나타내기 
+-- 가운데 한 칸 띄기(' '), 이메일 추가 
+SELECT employee_id, 
+        first_name || ' ' || last_name,
+        email||'@'||'company.com'
+FROM employees;
+
+-- 새로운 열을 생성하는 것이 아니라 보여만 주는 것이다.
+SELECT employee_id, salary, salary + 500, salary - 100, (salary * 1.1) / 2
+FROM employees;
+
+-- 열이름을 별명으로, 잠시 보여줄 때만 사용 
+SELECT employee_id AS 사원번호, 
+        salary AS 급여, 
+        salary + 500 AS 추가급여, 
+        salary - 100 AS 인하급여, 
+        (salary * 1.1) / 2 AS 조정급여
+FROM employees;
+
+-- id가 100인 사람의 정보만 출력 (Where)
+SELECT *
+FROM employees
+WHERE employee_id = 100;
+
+-- first_name이 David인 사람의 정보만 출력 (WHERE)
+SELECT *
+FROM employees
+WHERE first_name = 'David';
+
+-- employees에서 employee_id가 105 이상인 직원 정보를 출력
+SELECT *
+FROM employees
+WHERE employee_id >= 105;
+
 
