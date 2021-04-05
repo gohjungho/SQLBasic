@@ -1,7 +1,3 @@
-실행파일 경로는 C:/sqldeveloper/sqldeveloper.exe
-접속 비밀번호: 1234 
-코드 실행 단축키: ctrl + enter 
-
 --는 줄 끝까지 주석으로 처리됩니다.
 -- *은 모든 열이라는 의미로 사용 
 SELECT * 
@@ -69,4 +65,53 @@ SELECT *
 FROM employees
 WHERE employee_id >= 105;
 
+-- BETWEEN a AND b: a와 b 사이의 수 (이상, 이하) 
+SELECT *
+FROM employees
+WHERE salary BETWEEN 10000 AND 20000;
 
+-- IN은 =과 유사하지만 =은 하나의 조건으로 지정하고 
+-- IN은 값을 여러 개 설정 
+SELECT *
+FROM employees
+WHERE salary IN(10000,17000,24000);
+
+-- LIKE는 명확하지 않은 조건으로 찾을 때 
+-- ~처럼 ~같은 의미 
+-- 조건에는 문자나 숫자를 포함할 수 있다. 
+-- %는 모든 문자, _는 한 글자라는 의미 
+SELECT *
+FROM employees
+WHERE job_id LIKE 'AD%'; -- 'AD___' 또는 '%ame%'와 같이 쓸 수도 있다. 
+
+-- 데이터 값이 null인 경우를 조회
+-- 0이나 공백이 아닌 아무것도 없는 값이 null
+SELECT *
+FROM   employees
+WHERE  manager_id IN NULL;
+
+-- 조건을 모두 충족하는 데이터를 검색 (AND)
+-- AND, OR를 계속 붙여 추가할 수 있다.
+-- AND는 명확하나 OR는 이것저것 다 붙기에 주의할 필요가 있다.
+SELECT *
+FROM   employees
+WHERE  salary > 4000
+AND job_id = 'IT_PROG';
+
+-- 조건을 모두 충족하는 데이터를 검색 (OR)
+-- AND, OR를 계속 붙여 추가할 수 있다.
+SELECT *
+FROM   employees
+WHERE  salary > 4000
+AND job_id = 'IT_PROG'
+OR job_id = 'FI_ACCOUNT';
+
+-- <> 아니다. 파이썬의 !=와 같은 의미 
+SELECT *
+FROM   employees
+WHERE  employee_id <> 105;
+
+-- IS NULL <>, IS NOT NULL
+SELECT *
+FROM   employees
+WHERE  manager_id IS NOT NULL;
