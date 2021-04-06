@@ -1,0 +1,33 @@
+-- 자동 데이터 타입 변환 
+SELECT 1 + '2' 
+FROM   DUAL;
+
+-- 수동 데이터 타입 변환 
+-- TO_CHAR(날짜 데이터 타입, '지정 형식')
+-- 날짜 형식을 문자 형식으로 바꾸기
+SELECT TO_CHAR(SYSDATE, 'YY'),
+        TO_CHAR(SYSDATE, 'YYYY'),
+        TO_CHAR(SYSDATE, 'MM'),
+        TO_CHAR(SYSDATE, 'MON'),
+        TO_CHAR(SYSDATE, 'YYYYMMDD') 응용적용1,
+        TO_CHAR(TO_DATE('20171008'), 'YYYYMMDD') 응용적용2
+FROM   DUAL;
+
+-- 날짜 지정 형식을 시간 지정 형식으로 지정
+SELECT TO_CHAR(SYSDATE, 'HH:MI:SS PM') 시간형식,
+       TO_CHAR(SYSDATE, 'YYYY/MM/DD HH:MI:SS PM') 날짜와시간조합
+FROM   dual;
+
+-- 기타 형식 요소를 활용해 날짜와 시간 데이터를 출력
+SELECT TO_CHAR(SYSDATE, 'HH-MI-SS PM') 시간형식,
+       TO_CHAR(SYSDATE, ' "날짜:" YYYY/MM/DD "시각:" HH:MI:SS PM' ) 날짜와시각표현
+FROM   dual;
+
+-- 숫자 형식 변환하기 
+-- TO_CHAR(숫자 데이터 타입, ‘지정 형식’)
+
+-- 숫자 형식 문자열을 숫자 데이터 타입으로 변환하기 
+-- TO_NUMBER(숫자)
+
+-- 날짜를 나타내는 문자열을 명시된 날짜로 변환하기 
+-- TO_DATE(문자열, ‘지정 형식’)
