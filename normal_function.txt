@@ -1,0 +1,46 @@
+-- NOT NULL값 처리하기 
+
+SELECT salary * commission_pct 
+-- salary와 commission_pct를 곱한 결과 출력. null값을 확인할 수 있다.
+FROM   employees
+ORDER BY commission_pct;
+
+-- NVL(열 이름(null이 포함된 열이나 포함 값), 치환 값(null에서 변환하고자 하는 값))
+SELECT salary * NVL(commission_pct, 1) 
+FROM   employees
+ORDER BY commission_pct;
+
+-- DECODE(열 이름, 조건 값, 치환 값(조건 값에 해당할 경우 출력 값), 기본값(조건 값에 해당하지 않을 경우 출력 값))
+SELECT first_name, 
+        last_name,
+        department_id,
+        salary 원래급여,
+        DECODE(department_id, 60, salary * 1.1, salary) 조정된급여,
+        DECODE(department_id, 60, '10%인상', '미인상') 인상여부
+FROM   employees
+
+-- CASE: 복잡한 조건식을 여러 개 적용해야 할 때 사용 
+-- CASE 
+--    WHEN 조건 1 THEN 출력 값 1 
+--    WHEN 조건 2 THEN 출력 값 2
+--    WHEN 조건 3 THEN 출력 값 3
+--    ... 
+-- END
+
+SELECT employee_id, first_name, last_name, salary,
+    CASE 
+        WHEN salary >= 9000 THEN '상위급여' 
+        WHEN salary BETWEEN 6000 AND 8999 THEN '중위급여'  
+        ELSE '하위급여'
+    END AS 급여등급
+FROM employees
+WHERE job_id = 'IT_PROG';
+
+-- RANK, DENSE_RANK, ROW_NUMBER
+-- 데이터 값에 순위를 매기는 함수
+SELECT employee_id, 
+        salary,
+        RANK() OVER(ORDER BY salary DESC) RANK_급여,
+        DENSE_RANK() OVER(ORDER BY salary DESC) DENSE_RANK_급여, 
+        ROW_NUMBER() OVER(ORDER BY salary DESC) ROW_NUMBER_급여
+FROM employees;
