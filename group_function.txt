@@ -1,0 +1,77 @@
+-- SELECT 그룹 함수(열 이름)
+-- FROM 테이블 이름
+-- [WHERE 조건식]
+-- [ORDER BY 열 이름];
+
+-- 행의 수 세기(COUNT)
+-- 값이 없는 null값도 하나의 행으로 포함한다.
+SELECT COUNT(salary) salary행수
+FROM employees;
+
+-- 합계(SUM), 평균(AVG) 
+-- SUM(열 이름) / AVG(열 이름)
+SELECT SUM(salary) 합계, 
+        AVG(salary) 평균, 
+        SUM(salary) / COUNT(salary) 계산된평균 
+FROM employees;
+
+-- 최대값(MAX), 최소값(MIN) 
+-- MAX(열 이름) / MIN(열 이름)
+SELECT  MAX(salary) 최댓값, 
+        MIN(salary) 최솟값, 
+        MAX(first_name)  최대문자값, 
+        MIN(first_name) 최소문자값 
+FROM employees;
+
+-- GROUP BY 
+
+-- SELECT 그룹 함수(열 이름)
+-- FROM 테이블 이름
+-- [WHERE 조건식]
+-- GROUP BY 열 이름; 
+-- [ORDER BY 열 이름];
+
+
+-- SELECT 절에 기준 열과 그룹 함수가 같이 지정되면 GROUP BY 절에 기준 열 이름이 반드시 기술되어야 한다. 
+-- SELECT 절에 그룹 함수만 기술되고 열 이름이 기술되지 않으면 GROUP BY 절을 반드시 기술할 필요는 없음.
+-- WHERE 절을 사용하면 행을 그룹으로 묶기 전에 앞서 조건식이 적용
+-- SELECT 절에 그룹 함수를 사용하지 않아도 GROUP BY 절만으로도 사용할 수 있다.
+
+SELECT  job_id 직무, 
+        SUM(salary) 직무별_총급여, 
+        AVG(salary) 직무별_평균급여 
+FROM employees
+WHERE employee_id >= 10
+GROUP BY job_id 
+ORDER BY 직무별_총급여 DESC, 직무별_평균급여;
+
+SELECT  job_id job_id_대그룹,
+        manager_id manager_id_중그룹, 
+        SUM(salary) 그룹핑_총급여,
+        AVG(salary) 그룹핑_평균급여
+FROM employees
+WHERE employee_id >= 10
+GROUP BY job_id, manager_id
+ORDER BY 그룹핑_총급여 DESC, 그룹핑_평균급여;
+
+-- HAVING 
+
+-- SELECT       열 이름, 그룹 함수(열 이름) 
+-- FROM         테이블 이름 
+-- [WHERE       조건식] 
+-- GROUP BY     열 이름 
+-- [HAVING      조건식] 
+-- [ORDER BY    열 이름];
+
+-- 연산된 그룹 함수 결과에 조건 적용하기
+-- HAVING 절은 GROUP BY 절 다음에 기술하는 것이 논리적이고 가독성도 좋다
+
+SELECT  job_id 직무,
+        SUM(salary) 직무별_총급여,
+        AVG(salary) 직무별_평균급여
+FROM employees
+WHERE employee_id >= 10
+GROUP BY job_id
+HAVING SUM(salary) > 30000
+ORDER BY 직무별_총급여 DESC, 직무별_평균급여;
+
